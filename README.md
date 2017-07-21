@@ -79,9 +79,9 @@ public class Test {
 -> 断言 -> 回滚数据库 -> 关闭数据库连接
 ```
 - 例子<br>
-单独的dbunit使用起来过于麻烦，详情例子可以查看[dbunit官网](#http://dbunit.sourceforge.net/faq.html)
+单独的dbunit使用起来过于麻烦，详情例子可以查看[dbunit官网](http://dbunit.sourceforge.net/faq.html)
 - 与spring结合<br>
-和spring结合，需要用到另外一个插件：[Spring Test DBUnit](#https://springtestdbunit.github.io/spring-test-dbunit/),它提供了多个注解来方便测试，其中主要的三个注解是
+和spring结合，需要用到另外一个插件：[Spring Test DBUnit](https://springtestdbunit.github.io/spring-test-dbunit/),它提供了多个注解来方便测试，其中主要的三个注解是
 ```
 @DbUnitConfiguration(databaseConnection  = {"dataSource"})
 指定数据源
@@ -97,7 +97,7 @@ assertionMode= DatabaseAssertionMode.NON_STRICT_UNORDERED)
 - 简介<br>
 不依赖于其他外部数据库，在本机内存中模拟数据库，避免因为脏数据产生的测试问题
 - 劣势<br>
-不支持mysql的函数，只支持sql标准函数，具体可以去[h2官网](#http://www.h2database.com/html/main.html)查看
+不支持mysql的函数，只支持sql标准函数，具体可以去[h2官网](http://www.h2database.com/html/main.html)查看
 
 ### Spring Test
 - 原理<br>
@@ -129,4 +129,4 @@ assertionMode= DatabaseAssertionMode.NON_STRICT_UNORDERED)
 @TestExecutionListeners({MockH2TestExecutionListener.class,DbUnitTestExecutionListener.class})
 ```
 ### 源代码
-[项目代码](#https://github.com/LaughXP/testWithDbunitAndH2)
+[项目代码](https://github.com/LaughXP/testWithDbunitAndH2)
