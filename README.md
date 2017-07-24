@@ -70,6 +70,9 @@ public class Test {
   - PowerMock会根据你的mock要求，去修改写在注解@PrepareForTest里的class文件（当前测试类会自动加入注解中），以满足特殊的mock需求。例如：去除final方法的final标识，在静态方法的最前面加入自己的虚拟实现等。
   - 如果需要mock的是系统类的final方法和静态方法，PowerMock不会直接修改系统类的class文件，而是修改调用系统类的class文件，以满足mock需求。
 
+- 注意事项
+  - java7需要增加jvm参数:-noverify
+  - 遇到ClassNotFound错误，需要把对应的包名放到注解@PowerMockIgnore内(详见最后的项目代码示例)
 ### DBunit
 - 简介<br>
 通过预处理数据来初始化数据库数据，通过预期数据来校验实际测试结果，具体流程如下
