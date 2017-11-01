@@ -122,6 +122,7 @@ public class MockH2TestExecutionListener extends DependencyInjectionTestExecutio
             }
             //格式化到h2能识别的sql
             tableSql = StringUtils.replace(tableSql, "ON UPDATE CURRENT_TIMESTAMP ", "");
+            tableSql = StringUtils.replace(tableSql, "double", "decimal");
             String[] splitArray = StringUtils.split(tableSql,"\n");
             Preconditions.checkNotNull(splitArray);
             //重命名key,如果是多张表，相同的key会报重名错误，在原来的key名字前面加上表名字
