@@ -1,6 +1,9 @@
-package com.github.service;
+package com.github.service.impl;
 
 import com.github.common.Constants;
+import com.github.service.BalanceService;
+import com.github.service.HelloService;
+import com.github.service.WorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,7 @@ public class WorldServiceImpl implements WorldService {
     @Autowired
     private BalanceService balanceService;
 
+    @Override
     public String hello(String name, int number) {
         Long id = helloService.getPrimaryKey(name);
         helloService.update(id, number);

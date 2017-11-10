@@ -1,6 +1,9 @@
 package com.github.dao;
 
+import com.github.Entity.Hello;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 创 建 人 :           yu.gao
@@ -13,4 +16,6 @@ public interface HelloMapper {
     public Long getPrimaryKey(@Param("name") String name);
 
     public void update(@Param("id") long id, @Param("number") int number);
+
+    public List<Hello> selectAll();
 }

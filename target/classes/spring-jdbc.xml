@@ -10,7 +10,7 @@
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
           destroy-method="close">
         <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
-        <property name="url" value="jdbc:mysql://localhost:3306/laughxp"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/laughxp?useSSL=false"/>
         <property name="username" value="root"/>
         <property name="password" value=""/>
         <!-- 配置初始化大小、最小、最大 -->
@@ -52,27 +52,6 @@
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
-    <!--Spring 声明式配置 -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="verify*" read-only="true"/>
-            <tx:method name="acquire*" read-only="true"/>
-            <tx:method name="select*" read-only="true"/>
-            <tx:method name="count*" read-only="true"/>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="is*" read-only="true"/>
-            <tx:method name="add*" rollback-for="Exception" propagation="REQUIRED"/>
-            <tx:method name="insert*" rollback-for="Exception" propagation="REQUIRED"/>
-            <tx:method name="create*" rollback-for="Exception" propagation="REQUIRED"/>
-            <tx:method name="register*" rollback-for="Exception" propagation="REQUIRED"/>
-            <tx:method name="update*" rollback-for="Exception" propagation="REQUIRED"/>
-            <tx:method name="delete*" rollback-for="Exception" propagation="REQUIRED"/>
-        </tx:attributes>
-    </tx:advice>
-    <aop:config>
-        <aop:pointcut id="serviceOperation" expression="execution(* com.github.*.*Impl.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
-    </aop:config>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

@@ -1,7 +1,8 @@
-package com.github.service;
+package com.github.service.impl;
 
 import com.github.dubbo.DubboEntity;
 import com.github.dubbo.DubboService;
+import com.github.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Resource
     private DubboService dubboService;
 
+    @Override
     public int calBalance(String name) {
         DubboEntity dubboEntity = dubboService.getBalance(name);
         return dubboEntity.getBalance();

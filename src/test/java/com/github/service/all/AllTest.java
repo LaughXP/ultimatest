@@ -67,7 +67,7 @@ public class AllTest extends MockH2TestExecutionListener {
         long id = 10;
         int balance = 10;
 
-        DubboEntity dto = DubboEntity.builder().balance(balance).build();
+        DubboEntity dto = DubboEntity.newBuilder().balance(balance).build();
         Mockito.doReturn(id).when(helloService).getPrimaryKey(Mockito.anyString());
 //        Mockito.doNothing().when(helloService).update(Mockito.anyLong(), Mockito.anyInt());
         Mockito.when(dubboService.getBalance(Mockito.anyString())).thenReturn(dto);

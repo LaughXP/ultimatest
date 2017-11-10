@@ -13,6 +13,6 @@ public class DubboServiceImpl implements DubboService {
 
     public DubboEntity getBalance(String name) {
         System.out.println("invoke DubboServiceImpl.getBalance");
-        return DubboEntity.builder().balance(500).build();
+        return DubboEntity.newBuilder().balance(500).build();
     }
 }

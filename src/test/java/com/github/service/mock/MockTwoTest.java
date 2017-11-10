@@ -70,7 +70,7 @@ public class MockTwoTest {
     public void hello() throws Exception {
         long id = 1;
         int balance = 10;
-        DubboEntity dto = DubboEntity.builder().balance(balance).build();
+        DubboEntity dto = DubboEntity.newBuilder().balance(balance).build();
         //一旦用了类似Mockito.anyString()这种模糊匹配，必须每个参数都要用这种模式
         Mockito.when(helloService.getPrimaryKey(Mockito.anyString())).thenReturn(id);
         Mockito.doNothing().when(helloService).update(Mockito.anyLong(), Mockito.anyInt());

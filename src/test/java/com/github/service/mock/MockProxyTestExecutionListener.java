@@ -1,5 +1,6 @@
 package com.github.service.mock;
 
+import com.github.service.util.InvokeTestTargetSource;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
@@ -22,21 +23,6 @@ public class MockProxyTestExecutionListener extends DependencyInjectionTestExecu
     @Override
     public void prepareTestInstance(final TestContext testContext) throws Exception {
         super.prepareTestInstance(testContext);
-        getTarget(testContext);
-    }
-
-    private void getTarget(final TestContext testContext) throws Exception {
-        Object testClass = testContext.getTestInstance();
-        Field[] fields = AopTestUtils.getTargetObject(testClass).getClass().getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            Spy spy = field.getAnnotation(Spy.class);
-            InjectMocks injectMocks = field.getAnnotation(InjectMocks.class);
-            Autowired autowired = field.getAnnotation(Autowired.class);
-            if( (spy != null && autowired != null) || (injectMocks != null && autowired != null)) {
-                field.set(testClass,AopTestUtils.getTargetObject(field.get(testClass)));
-            }
-        }
-        MockitoAnnotations.initMocks(testClass);
+        InvokeTestTargetSource.getTarget(testContext);
     }
 }

@@ -13,4 +13,10 @@
     set number = #{number}
     where id = #{id}
   </update>
+  <select id="selectAll" resultType="com.github.Entity.Hello">
+    SELECT
+    id as id,
+    name as name
+    from hello
+  </select>
 </mapper>

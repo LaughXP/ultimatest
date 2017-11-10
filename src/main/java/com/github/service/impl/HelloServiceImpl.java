@@ -1,8 +1,12 @@
-package com.github.service;
+package com.github.service.impl;
 
+import com.github.Entity.Hello;
 import com.github.dao.HelloMapper;
+import com.github.service.HelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 创 建 人 :           yu.gao
@@ -16,11 +20,18 @@ public class HelloServiceImpl implements HelloService {
     @Autowired
     private HelloMapper helloMapper;
 
+    @Override
     public Long getPrimaryKey(String name) {
         return helloMapper.getPrimaryKey(name);
     }
 
+    @Override
     public void update(long id, int number) {
         helloMapper.update(id, number);
+    }
+
+    @Override
+    public List<Hello> selectAll() {
+        return helloMapper.selectAll();
     }
 }

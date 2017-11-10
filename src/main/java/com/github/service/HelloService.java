@@ -1,5 +1,9 @@
 package com.github.service;
 
+import com.github.Entity.Hello;
+
+import java.util.List;
+
 /**
  * 创 建 人 :           yu.gao
  * 创建时间 :           2017-07-20 下午9:20
@@ -11,4 +15,6 @@ public interface HelloService {
     public Long getPrimaryKey(String name);
 
     public void update(long id, int number);
+
+    public List<Hello> selectAll();
 }
