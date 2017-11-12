@@ -13,6 +13,8 @@ public class Hello {
 
     private String name;
 
+    private String age;
+
     private DubboEntity dubboEntity;
 
     public Hello() {
@@ -21,6 +23,7 @@ public class Hello {
     private Hello(Builder builder) {
         setId(builder.id);
         setName(builder.name);
+        setAge(builder.age);
         setDubboEntity(builder.dubboEntity);
     }
 
@@ -44,6 +47,14 @@ public class Hello {
         this.name = name;
     }
 
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
     public DubboEntity getDubboEntity() {
         return dubboEntity;
     }
@@ -52,9 +63,15 @@ public class Hello {
         this.dubboEntity = dubboEntity;
     }
 
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
+    }
+
     public static final class Builder {
         private Integer id;
         private String name;
+        private String age;
         private DubboEntity dubboEntity;
 
         private Builder() {
@@ -70,6 +87,11 @@ public class Hello {
             return this;
         }
 
+        public Builder age(String val) {
+            age = val;
+            return this;
+        }
+
         public Builder dubboEntity(DubboEntity val) {
             dubboEntity = val;
             return this;
@@ -78,10 +100,5 @@ public class Hello {
         public Hello build() {
             return new Hello(this);
         }
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
     }
 }

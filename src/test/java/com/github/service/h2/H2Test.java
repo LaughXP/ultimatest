@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -46,14 +47,37 @@ public class H2Test extends H2TestExecutionListener {
     @Test
     @DatabaseSetup(value = "classpath:hello_beg.xml", connection = H2TestExecutionListener.DATA_SOURCE, type = DatabaseOperation.CLEAN_INSERT)
     public void testAll() throws Exception {
-        List<Hello> result = Lists.newArrayList(
+        //单对象比较 pass
+//        System.out.println(compare(Hello.newBuilder().id(10).name("xx").build(), Hello.newBuilder().id(10).name("yx").build()));
+
+        //组合对象 外层不等，里层相等
+//        System.out.println("result:"+ compare(Hello.newBuilder().id(10).name("xx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("xxx").build()).build(),
+//                Hello.newBuilder().id(10).name("yx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("xxx").build()).build()));
+
+        //组合对象 外层相等，里层不等
+//        System.out.println("result:"+ compare(Hello.newBuilder().id(10).name("xx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("xxx").build()).build(),
+//                Hello.newBuilder().id(10).name("xx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("zzz").build()).build()));
+
+        //list比较pass
+//        List<Hello> result = Lists.newArrayList(
+//                Hello.newBuilder().id(10).name("xx").build(),
+//                Hello.newBuilder().id(11).name("yy").build(),
+//                Hello.newBuilder().id(12).name("zz").build());
+//        List<Hello> targetHello = Lists.newArrayList(
+//                Hello.newBuilder().id(11).name("yy").build(),
+//                Hello.newBuilder().id(15).name("xx").build(),
+//                Hello.newBuilder().id(13).name("zz").build());
+
+        // List组合对象 pass
+                List<Hello> result = Lists.newArrayList(
                 Hello.newBuilder().id(10).name("xx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("xxx").build()).build(),
                 Hello.newBuilder().id(11).name("yy").dubboEntity(DubboEntity.newBuilder().balance(111).stock("yyy").build()).build(),
                 Hello.newBuilder().id(12).name("zz").dubboEntity(DubboEntity.newBuilder().balance(122).stock("zzz").build()).build());
         List<Hello> targetHello = Lists.newArrayList(
-                Hello.newBuilder().id(11).name("yy").dubboEntity(DubboEntity.newBuilder().balance(112).stock("yyy").build()).build(),
-                Hello.newBuilder().id(15).name("xx").dubboEntity(DubboEntity.newBuilder().balance(155).stock("xxx").build()).build(),
+                Hello.newBuilder().id(11).name("yy").dubboEntity(DubboEntity.newBuilder().balance(111).stock("yyy").build()).build(),
+                Hello.newBuilder().id(15).name("xx").dubboEntity(DubboEntity.newBuilder().balance(100).stock("xxx").build()).build(),
                 Hello.newBuilder().id(13).name("zz").dubboEntity(DubboEntity.newBuilder().balance(133).stock("zzz").build()).build());
+
         System.out.println(compare(result, targetHello));
     }
 
@@ -102,14 +126,29 @@ public class H2Test extends H2TestExecutionListener {
                 field.setAccessible(true);
                 Object sourceVal = field.get(source);
                 Object targetVal = field.get(target);
-                if(isWrapClass(sourceVal.getClass()) && isWrapClass(targetVal.getClass())) {
-                    if(!sourceVal.equals(targetVal)) {
-                        diffFields++;
-                    }
+                if(sourceVal == null && targetVal == null) {
+                    continue;
+                }
+                if(sourceVal == null || targetVal == null){
+                    diffFields++;
                 } else {
-                    Table<Object, Object, Integer> result = compare(field.get(source), field.get(target));
-                    if(result != null) {
-                        diffFields++;
+                    if(isWrapClass(sourceVal.getClass()) && isWrapClass(targetVal.getClass())) {
+                        if(!sourceVal.equals(targetVal)) {
+                            diffFields++;
+                        }
+                    } else if(sourceVal instanceof String && targetVal instanceof String) {
+                        if(!sourceVal.equals(targetVal)) {
+                            diffFields++;
+                        }
+                    }  else if(sourceVal instanceof BigDecimal && targetVal instanceof BigDecimal) {
+                        if(!sourceVal.equals(targetVal)) {
+                            diffFields++;
+                        }
+                    } else{
+                        Table<Object, Object, Integer> result = compare(field.get(source), field.get(target));
+                        if(result != null) {
+                            diffFields++;
+                        }
                     }
                 }
             }
@@ -133,6 +172,7 @@ public class H2Test extends H2TestExecutionListener {
             for(Map.Entry<Object, Integer> entry : rowMapVal.entrySet()) {
                 if(entry.getValue() < max && !alreadyEqualSet.contains(entry.getKey()) && !alreadyNotEqualSet.contains(entry.getKey())) {
                     maxEntry = entry;
+                    max = maxEntry.getValue();
                 }
             }
             if(maxEntry != null) {
