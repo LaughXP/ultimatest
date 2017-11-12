@@ -6,8 +6,6 @@ import com.github.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
 /**
  * 创 建 人 :           yu.gao
  * 创建时间 :           2017-07-20 下午9:27
@@ -17,7 +15,7 @@ import javax.annotation.Resource;
 @Service("balanceService")
 public class BalanceServiceImpl implements BalanceService {
 
-    @Resource
+    @Autowired
     private DubboService dubboService;
 
     @Override

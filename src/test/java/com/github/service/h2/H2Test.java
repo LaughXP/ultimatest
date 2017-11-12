@@ -111,6 +111,11 @@ public class H2Test extends H2TestExecutionListener {
             }
             return 0 == allSize ? null : clearData(table, alreadyEqualSet);
         } else if(source instanceof Map) {
+            Map sourceMap = (Map) source;
+            Map targetMap = (Map) target;
+            for(Object entryObject : sourceMap.entrySet()) {
+                Map.Entry entry = (Map.Entry) entryObject;
+            }
             return table;
         } else {
             if(!source.getClass().getName().equals(target.getClass().getName())) {
