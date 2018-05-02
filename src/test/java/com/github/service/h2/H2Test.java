@@ -115,6 +115,11 @@ public class H2Test extends H2TestExecutionListener {
             Map targetMap = (Map) target;
             for(Object entryObject : sourceMap.entrySet()) {
                 Map.Entry entry = (Map.Entry) entryObject;
+                if(targetMap.containsKey(entry.getKey())) {
+
+                } else {
+                    table.put(entry, "null", 1);
+                }
             }
             return table;
         } else {
